@@ -31,6 +31,8 @@ namespace cmd
 
 	auto initialize() -> void;
 
+	auto parameter_exists(char** begin, char** end, const std::string& option) -> bool;
+
   auto check_parameters(int argc, char* argv[]) -> bool;
 
 	inline const char* white = "\033[0m";

@@ -65,6 +65,7 @@ auto web::begin_scouting(const std::string& username) -> bool
     { "osu!", "https://osu.ppy.sh/u/" + username },
     { "minecraft", "https://namemc.com/profile/" + username },
     { "onlyfans", "https://onlyfans.com/" + username },
+    { "youtube", "https://www.youtube.com/" + username },
   };
 
   // start the timer
