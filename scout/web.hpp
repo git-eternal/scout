@@ -14,6 +14,6 @@ enum class response_type : std::uint16_t
 namespace web
 {
   inline std::string username{};
-
+  
   auto begin_scouting(const std::string& username) -> bool;
 }

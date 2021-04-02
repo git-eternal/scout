@@ -1,10 +1,5 @@
 #include "utils.hpp"
 
-auto cmd::print_logo() -> void
-{
-	std::cout << blue << logo << white << '\n';
-}
-
 auto cmd::output_request(const website_t& website,
 	const int status_code) -> void
 {
@@ -18,13 +13,19 @@ auto cmd::output_request(const website_t& website,
 	{
 	// status 200: success
 	case 200:
+		
 		std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
+		cmd::results += ("[hit]: " + url + '\n');
 		break;
 
 	// status 404: error
 	case 404:
 	case 410:
+	case 301:
+	case 520:
+	case 524:
 		std::cout << "  [" << red << "nil" << white << "] " << url << '\n';
+		cmd::results += ("[nil]: " + url + '\n');
 		break;
 
 	default:
@@ -75,7 +76,27 @@ auto cmd::check_parameters(int argc, char* argv[]) -> bool
 		}
 	}
 
+	if (parameter_exists(argv, end_arg, "-o") ||
+		parameter_exists(argv, end_arg, "--genf"))
+	{
+		std::cout << "wanted file\n";
+
+		if (std::string(argv[4]).find(".txt") != std::string::npos)
+		{
+			output_results_to_file = true;
+
+			std::cout << "setting: " << argv[4];
+			cmd::results_file_name = argv[4];
+			std::cout << " file name: " << cmd::results_file_name;
+		}
+	}
+
 	return true;
+}
+
+auto cmd::print_logo() -> void
+{
+	std::cout << blue << logo << white << '\n';
 }
 
 auto cmd::set_console_cursor(bool shown = false) -> void
@@ -91,6 +112,18 @@ auto cmd::set_console_cursor(bool shown = false) -> void
 	// set the cursor visibility (true/false)
 	cursor_info.bVisible = shown;
 	SetConsoleCursorInfo(out, &cursor_info);
+}
+
+auto cmd::write_results_to_file() -> void
+{
+	std::ofstream out(results_file_name);
+
+	if (!out.is_open())
+		std::cerr << "error occurred while making results file\n";
+
+	out << cmd::results;
+
+	out.close();
 }
 
 auto cmd::initialize() -> void

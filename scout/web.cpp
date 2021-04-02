@@ -75,14 +75,15 @@ auto web::begin_scouting(const std::string& username) -> bool
 	std::for_each(
 		std::execution::par_unseq, 
 		websites.begin(), 
-		websites.end(),
+    websites.end(),
 		[&](auto& website) -> void 
 	{
 		// parse title and url c++17 style
 		auto [title, url] = website;
 
 		cpr::Response r = cpr::Get(
-			cpr::Url{ url.c_str() }
+			cpr::Url{ url.c_str() },
+      cpr::Timeout{ 1000 }
 		);
 
 		// output the result to console

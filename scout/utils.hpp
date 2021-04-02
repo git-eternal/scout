@@ -43,6 +43,8 @@ namespace cmd
   auto check_parameters(int argc, char* argv[]) -> bool;
 	auto set_console_cursor(bool shown) -> void;
 
+	auto write_results_to_file() -> void;
+
 	// console colors (portable)
 	inline const char* white  = "\033[0m";
 	inline const char* black  = "\x1B[30m";
@@ -54,4 +56,10 @@ namespace cmd
 	inline const char* red    = "\x1B[31m";
 
 	inline std::shared_timed_mutex m{};
+
+	inline std::string results{};
+
+	inline std::string results_file_name{};
+
+	inline bool output_results_to_file{};
 }
