@@ -94,7 +94,7 @@ auto web::begin_scouting(const std::string& username) -> bool
 
   auto time = duration_cast<_ms_>(end - now).count();
 
-  std::cout << "\n  time took: " << time << "ms\n";
+  std::cout << "\n  time took: " << time << "ms ";
 
   if (cmd::output_results_to_file)
     cmd::write_results_to_file();

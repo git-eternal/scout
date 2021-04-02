@@ -38,8 +38,6 @@ auto cmd::set_console_cursor(bool shown = false) -> void
 
 auto cmd::write_results_to_file() -> void
 {
-	std::cout << "  writing results to file\n";
-
 	std::ofstream out(results_file_name);
 
 	if (!out.is_open())
@@ -47,6 +45,8 @@ auto cmd::write_results_to_file() -> void
 
 	// add the string to the file
 	out << cmd::results; out.close();
+
+	std::cout << "(wrote results to file)\n";
 }
 
 auto cmd::initialize() -> void
