@@ -32,5 +32,8 @@
     <ClInclude Include="web.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="argparse.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

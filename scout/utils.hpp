@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "argparse.hpp"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -35,12 +36,6 @@ namespace cmd
 
 	auto initialize() -> void;
 
-	auto parameter_exists(
-		char** begin, 
-		char** end, 
-		const std::string& option) -> bool;
-
-  auto check_parameters(int argc, char* argv[]) -> bool;
 	auto set_console_cursor(bool shown) -> void;
 
 	auto write_results_to_file() -> void;
