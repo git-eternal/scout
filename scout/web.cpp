@@ -56,7 +56,7 @@ auto web::begin_scouting(const std::string& username) -> bool
     { "reverbnation", "https://www.reverbnation.com/" + username },
     { "designspiration", "https://www.designspiration.com/" + username },
     { "bandcamp", "https://www.bandcamp.com/" + username },
-    { "colourlovers", "https://www.colourlovers.com/lover" + username },
+    { "colourlovers", "https://www.colourlovers.com/lover/" + username },
     { "ifttt", "https://www.ifttt.com/p/" + username },
     { "slack", "https://" + username + ".slack.com"},
     { "wikipedia", "https://en.wikipedia.org/wiki/User:" + username },

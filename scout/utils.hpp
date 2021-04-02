@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include <chrono>
 #include <execution>
+#include <shared_mutex>
 
 #include "web.hpp"
 
@@ -26,6 +27,8 @@ using namespace std::chrono_literals;
 
 namespace cmd
 {
+	auto print_logo() -> void;
+
 	auto output_request(const website_t& website, 
 		const int status_code) -> void;
 
@@ -35,6 +38,8 @@ namespace cmd
 
   auto check_parameters(int argc, char* argv[]) -> bool;
 
+	auto set_console_cursor(bool shown) -> void;
+
 	inline const char* white = "\033[0m";
 	inline const char* black = "\x1B[30m";
 	inline const char* green = "\x1B[32m";
@@ -43,4 +48,6 @@ namespace cmd
 	inline const char* purple = "\033[35m";
 	inline const char* clear = "\033c";
 	inline const char* red = "\x1B[31m";
+
+	inline std::shared_timed_mutex m{};
 }

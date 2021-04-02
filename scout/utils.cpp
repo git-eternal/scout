@@ -1,96 +1,109 @@
 #include "utils.hpp"
 
+auto cmd::print_logo() -> void
+{
+	std::cout << blue << logo << white << '\n';
+}
+
 auto cmd::output_request(const website_t& website,
-  const int status_code) -> void
+	const int status_code) -> void
 {
-  // extract contents from tuple
-  auto [title, url] = website;
+	// lock the mutex so output doesn't screw up
+	std::unique_lock<decltype(m)> lock(m);
 
-  switch (status_code)
-  {
-    // status 200: success
-    case 200:
-    {
-      std::cout  << "  [" << blue << "hit" << white << "] " << url << '\n';
-    }
-    break;
+	// extract contents from tuple
+	auto [title, url] = website;
 
-    // status 404: error
-    case 404:
-    case 410:
-    {
-      std::cout  << "  [" << red << "nil" << white << "] " << url << '\n';
-    }
-    break;
+	switch (status_code)
+	{
+	// status 200: success
+	case 200:
+		std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
+		break;
 
-    default:
-    {
-      std::cout << "status_code: " << status_code << '\n';
-    }  
-  }
+	// status 404: error
+	case 404:
+	case 410:
+		std::cout << "  [" << red << "nil" << white << "] " << url << '\n';
+		break;
+
+	default:
+		std::cout << "status_code: " << status_code << '\n';
+	}
 }
 
-auto cmd::initialize() -> void
+auto cmd::parameter_exists(char** begin, char** end,
+	const std::string& option) -> bool
 {
-  // needed for colored cmd output
-  HANDLE out{ GetStdHandle(STD_OUTPUT_HANDLE) };
-
-  DWORD dw_mode{ 0 }; 
-  GetConsoleMode(out, &dw_mode);
-  SetConsoleMode(out,
-    dw_mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-
-  CONSOLE_CURSOR_INFO cursorInfo;
-
-  GetConsoleCursorInfo(out, &cursorInfo);
-  cursorInfo.bVisible = false;
-  SetConsoleCursorInfo(out, &cursorInfo);
-}
-
-auto cmd::parameter_exists(char** begin, char** end, 
-  const std::string& option) -> bool
-{
-  return std::find(begin, end, option) != end;
+	return std::find(begin, end, option) != end;
 }
 
 auto cmd::check_parameters(int argc, char* argv[]) -> bool
 {
-  if (argc <= 1)
-  {
-    std::cout << argv[0] << " -?\n";
+	if (argc <= 1)
+	{
+		std::cout << "\nusage help: " << argv[0] << " -h, --help\n";
+		return false;
+	}
 
-    return false;
-  }
+	auto end_arg{ argv + argc };
 
-  if (parameter_exists(argv, argv + argc, "-h"))
-  {
-    std::cout << "scout usage:\n";
-    std::cout << " -u: username\n";
-    std::cout << " -genfile: output results to file\n";
-    std::cout << "ex: scout.exe -u user123 -genfile results.txt";
-    std::exit(0);
-  }
+	if (parameter_exists(argv, end_arg, "-h") ||
+		parameter_exists(argv, end_arg, "--help"))
+	{
+		std::cout << "\nscout arguments:\n";
+		std::cout << "  -h, --help\t" <<
+			"show this help message and exit\n";
+		std::cout << "  -u, --user\t" <<
+			"the username you want to search\n";
+		std::cout << "  -o, --genf\t" <<
+			"output the results to a file\n\n";
+		std::cout << "example usage: scout.exe -u user123 --genf results.txt\n";
 
-  if (argc <= 1)
-  {
-    //if (argv[0])
-    //  std::cout << "usage: " << argv[0] 
-    //            << " <username>" << '\n';
-    //else
-    //  std::cout << "usage: " 
-    //            << "scout.exe <username>" << '\n';
+		std::exit(0);
+	}
 
-    std::cout << argv[0] << " -?\n";
+	if (parameter_exists(argv, end_arg, "-u") ||
+		parameter_exists(argv, end_arg, "--user"))
+	{
+		if (argv[2] != nullptr)
+			web::username = argv[2];
+		else
+		{
+			std::cout << "invalid arg (failed to provide username)\n";
+			std::exit(0);
+		}
+	}
 
-    return false;
-  }
+	return true;
+}
 
-  if (argv[1] == "-?")
-  {
-    std::cout << "scout usage:\n";
-    std::cout << " -u: username\n";
-    std::cout << " -o: output results to file\n";
-  }
+auto cmd::set_console_cursor(bool shown = false) -> void
+{
+	// needed for colored cmd output
+	HANDLE out{ GetStdHandle(STD_OUTPUT_HANDLE) };
 
-  return true;
+	// store the cursor information
+	CONSOLE_CURSOR_INFO cursor_info{};
+
+	GetConsoleCursorInfo(out, &cursor_info);
+
+	// set the cursor visibility (true/false)
+	cursor_info.bVisible = shown;
+	SetConsoleCursorInfo(out, &cursor_info);
+}
+
+auto cmd::initialize() -> void
+{
+	// needed for colored cmd output
+	HANDLE out{ GetStdHandle(STD_OUTPUT_HANDLE) };
+
+	DWORD dw_mode{ 0 }; GetConsoleMode(out, &dw_mode);
+
+	// needed for colored cmd output
+	SetConsoleMode(out,
+		dw_mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+
+	// hide the console cursor
+	set_console_cursor(false);
 }

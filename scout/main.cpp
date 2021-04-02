@@ -7,11 +7,11 @@ int main(int argc, char* argv[])
     std::exit(-1);
  
   cmd::initialize();
-  
-  std::cout << cmd::blue << logo << cmd::white << '\n';
+ 
+  cmd::print_logo();
 
-  // parse the username
-  std::string username{ argv[1] };
+  web::begin_scouting(web::username);
 
-  web::begin_scouting(username);
+  // re-show the cursor before close!
+  cmd::set_console_cursor(true);
 }
