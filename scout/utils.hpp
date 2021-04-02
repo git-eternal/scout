@@ -28,7 +28,15 @@ using namespace std::chrono_literals;
 
 namespace cmd
 {
-	auto print_logo() -> void;
+	// console colors (portable)
+	inline const char* white = "\033[0m";
+	inline const char* black = "\x1B[30m";
+	inline const char* green = "\x1B[32m";
+	inline const char* orange = "\x1B[33m";
+	inline const char* blue = "\x1B[36;1m";
+	inline const char* purple = "\033[35m";
+	inline const char* clear = "\033c";
+	inline const char* red = "\x1B[31m";
 
 	auto output_request(
 		const website_t& website, 
@@ -40,15 +48,10 @@ namespace cmd
 
 	auto write_results_to_file() -> void;
 
-	// console colors (portable)
-	inline const char* white  = "\033[0m";
-	inline const char* black  = "\x1B[30m";
-	inline const char* green  = "\x1B[32m";
-	inline const char* orange = "\x1B[33m";
-	inline const char* blue   = "\x1B[36;1m";
-	inline const char* purple = "\033[35m";
-	inline const char* clear  = "\033c";
-	inline const char* red    = "\x1B[31m";
+	auto __forceinline print_logo() -> void
+	{
+		std::cout << blue << logo << white << '\n';
+	}
 
 	inline std::shared_timed_mutex m{};
 

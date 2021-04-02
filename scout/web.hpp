@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include <cpr/cpr.h>
 
-#define REQ_SUCCESS(status_code) \
+#define request_success(status_code) \
   status_code >= 200 && status_code <= 299 
 
 enum class response_type : std::uint16_t

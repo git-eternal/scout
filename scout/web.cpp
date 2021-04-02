@@ -72,23 +72,21 @@ auto web::begin_scouting(const std::string& username) -> bool
   clock_tt::time_point now = clock_tt::now();
 
 	// parallelize iteration
-	std::for_each(
-		std::execution::par_unseq, 
+	std::for_each(std::execution::par_unseq, 
 		websites.begin(), 
-    websites.end(),
-		[&](auto& website) -> void 
+    websites.end(), [&](auto& website) -> void 
 	{
 		// parse title and url c++17 style
 		auto [title, url] = website;
 
-		cpr::Response r = cpr::Get(
+		cpr::Response r = cpr::Get
+    (
 			cpr::Url{ url.c_str() },
-      cpr::Timeout{ 1000 }
+      cpr::Timeout{ 2000 }
 		);
 
 		// output the result to console
-		cmd::output_request(website,
-			r.status_code);
+		cmd::output_request(website, r.status_code);
 	});
 
   // end the timer
@@ -99,8 +97,5 @@ auto web::begin_scouting(const std::string& username) -> bool
   std::cout << "\n  time took: " << time << "ms\n";
 
   if (cmd::output_results_to_file)
-  {
-    std::cout << "writing results to file\n";
     cmd::write_results_to_file();
-  }
 }

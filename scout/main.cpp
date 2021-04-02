@@ -1,6 +1,6 @@
 ﻿#include "utils.hpp"
 
-int main(int argc, char* argv[])
+auto main(int argc, char* argv[]) -> int
 {
   argparse::ArgumentParser scout("scout");
 
@@ -32,8 +32,7 @@ int main(int argc, char* argv[])
     std::exit(0);
   }
  
-  cmd::initialize();
-  cmd::print_logo();
+  cmd::initialize(); cmd::print_logo();
 
   web::begin_scouting(web::username);
 
