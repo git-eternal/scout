@@ -1,12 +1,5 @@
 #include "web.hpp"
 
-/*
-	add internet check and give warning if no internet lol
-	output the results to a file. if they have the argument set
-  parse the websites from a json (file or a pastebin raw)
-  add data breach option (enter email)?
-*/
-
 using clock_tt = std::chrono::steady_clock;
 
 auto web::begin_scouting(const std::string& username) -> bool
