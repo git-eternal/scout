@@ -8,6 +8,21 @@
 
 <hr>
 
+## How to use
+```console
+scout.exe --help
+Usage: scout [options]
+
+Optional arguments:
+-h --help       shows help message and exits
+-v --version    prints version information and exits
+-u --user       the username you want to search [required]
+-o --output     output the results to a file
+-f --found      only output found username hits [default: false]
+```
+
+**Example usage**: `scout.exe -f -u eternalrift --output results.txt`
+
 ## Preview
 ![preview](https://media.discordapp.net/attachments/826445675939627029/827524553357656074/unknown.png?width=357&height=544)
 
