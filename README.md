@@ -38,7 +38,7 @@ vcpkg install cpr:x86-windows-static
 vcpkg install nlohmann-json:x86-windows-static
 ```
 
-#### Compiling
+#### Compiling and contributing
 ```console
 # clone the repo
 $ git clone https://github.com/EternalRift/scout.git
