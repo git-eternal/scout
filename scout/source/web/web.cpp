@@ -4,6 +4,10 @@ using clock_tt = std::chrono::steady_clock;
 
 auto web::begin_scouting(const std::string& username) -> void
 {
+	// store all the websites in tuple form
+	std::vector<website_t> sites_vector{};
+
+	// grab the json of all the websites
 	cpr::Response r = cpr::Get
 	(
 		cpr::Url{ "https://pastebin.com/raw/1rwRvXKJ" },
@@ -11,9 +15,6 @@ auto web::begin_scouting(const std::string& username) -> void
 	);
 
 	nlohmann::json sites_json{ json::parse(r.text) };
-
-	// store all the websites in tuple form
-	std::vector<website_t> sites_vector{};
 
 	for (auto& website : sites_json["websites"].items())
 	{
@@ -34,6 +35,14 @@ auto web::begin_scouting(const std::string& username) -> void
 	// start the timer
 	clock_tt::time_point now = clock_tt::now();
 
+	// sort the vector by site title
+	std::sort(sites_vector.begin(), sites_vector.end(), 
+		[&](website_t& s1, website_t& s2) -> bool
+	{
+		return(std::get<0>(s1) < std::get<0>(s2));
+	});
+
+	// this will break the sort a bit but its ok
 	std::for_each(std::execution::par_unseq,
 		sites_vector.begin(),
 		sites_vector.end(), [&](auto& website) -> void
