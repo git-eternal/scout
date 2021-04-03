@@ -19,7 +19,7 @@ auto web::begin_scouting(const std::string& username) -> bool
 	{
 		std::string url = website.value()["url"];
 
-		// if url requires username in middle, replace
+		// if url requires username elsewhere, replace
 		if (url.find("username") != std::string::npos)
 			utils::replace(url, "username", username);
 		else
