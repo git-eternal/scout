@@ -1,17 +1,7 @@
 ﻿#pragma once
 
-#include "argparse.hpp"
-#include <iostream>
-#include <vector>
-#include <map>
-#include <tuple>
-#include <Windows.h>
-#include <chrono>
-#include <execution>
-#include <shared_mutex>
-#include <nlohmann/json.hpp>
-
-#include "web.hpp"
+#include "../global.hpp"
+#include "../web/web.hpp"
 
 												 // website title  website url
 using website_t = std::tuple<std::string, std::string>;
@@ -22,10 +12,6 @@ const std::string logo = R"(                       _     _   ___
   \__ \ (_| (_) | |_| | |_  | || |_| |
   |___/\___\___/ \__,_|\__| |_(_)___/ 
 )";
-
-using namespace std::chrono_literals;
-
-#define _ms_ std::chrono::milliseconds
 
 namespace cmd
 {

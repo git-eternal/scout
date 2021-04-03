@@ -15,25 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utils.cpp">
+    <ClCompile Include="source\utils\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="web.cpp">
+    <ClCompile Include="source\web\web.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="utils.hpp">
+    <ClInclude Include="source\utils\utils.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="web.hpp">
+    <ClInclude Include="source\web\web.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="argparse.hpp">
+    <ClInclude Include="source\deps\args.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\global.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -143,14 +143,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="utils.cpp" />
-    <ClCompile Include="web.cpp" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\utils\utils.cpp" />
+    <ClCompile Include="source\web\web.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="argparse.hpp" />
-    <ClInclude Include="utils.hpp" />
-    <ClInclude Include="web.hpp" />
+    <ClInclude Include="source\deps\args.hpp" />
+    <ClInclude Include="source\global.hpp" />
+    <ClInclude Include="source\utils\utils.hpp" />
+    <ClInclude Include="source\web\web.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

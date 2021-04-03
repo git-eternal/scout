@@ -1,6 +1,7 @@
 #pragma once
 
-#include "utils.hpp"
+#include "../utils/utils.hpp"
+
 #include <cpr/cpr.h>
 
 #define request_success(status_code) \

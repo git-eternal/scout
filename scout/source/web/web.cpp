@@ -10,7 +10,7 @@ auto web::begin_scouting(const std::string& username) -> bool
     cpr::Timeout{ 2000 }
   );
 
-  nlohmann::json sites_json{ nlohmann::json::parse(r.text) };
+  nlohmann::json sites_json{ json::parse(r.text) };
 
 	// store all the websites in tuple form
 	std::vector<website_t> sites_vector{};
