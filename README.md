@@ -1,3 +1,5 @@
+broken atm (false positives). fixing soon.
+
 <p align=center>
   <span><strong>Lightweight username lookup inspired by <a href="https://github.com/sherlock-project/sherlock">Sherlock</a>. Created in C++.</strong></span>
   <br>
