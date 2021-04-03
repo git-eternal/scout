@@ -9,6 +9,7 @@
 #include <chrono>
 #include <execution>
 #include <shared_mutex>
+#include <nlohmann/json.hpp>
 
 #include "web.hpp"
 
@@ -60,4 +61,11 @@ namespace cmd
 	inline std::string results_file_name{};
 
 	inline bool output_results_to_file{};
+}
+
+namespace utils
+{
+	auto replace(std::string& str,
+		const std::string& from,
+		const std::string& to) -> bool;
 }

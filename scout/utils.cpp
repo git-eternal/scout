@@ -49,6 +49,20 @@ auto cmd::write_results_to_file() -> void
 	std::cout << "(wrote results to file)\n";
 }
 
+auto utils::replace(std::string& str, 
+	const std::string& from, 
+	const std::string& to) -> bool
+{
+	size_t start_pos = str.find(from);
+
+	if (start_pos == std::string::npos)
+		return false;
+
+	str.replace(start_pos, from.length(), to);
+
+	return true;
+}
+
 auto cmd::initialize() -> void
 {
 	// needed for colored cmd output
