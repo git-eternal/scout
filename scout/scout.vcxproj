@@ -75,6 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -82,17 +84,31 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;wldap32.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -104,12 +120,21 @@
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <Optimization>MaxSpeed</Optimization>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <UseFullPaths>false</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;wldap32.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,10 +144,12 @@
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;ws2_32.lib;wldap32.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,12 +161,15 @@
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;ws2_32.lib;wldap32.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

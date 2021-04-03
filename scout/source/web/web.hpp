@@ -16,5 +16,5 @@ namespace web
 {
   inline std::string username{};
   
-  auto begin_scouting(const std::string& username) -> bool;
+  auto begin_scouting(const std::string& username) -> void;
 }

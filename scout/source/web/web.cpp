@@ -2,7 +2,7 @@
 
 using clock_tt = std::chrono::steady_clock;
 
-auto web::begin_scouting(const std::string& username) -> bool
+auto web::begin_scouting(const std::string& username) -> void
 {
   cpr::Response r = cpr::Get
   (
