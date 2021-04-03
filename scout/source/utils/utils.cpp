@@ -9,15 +9,26 @@ auto cmd::output_request(const website_t& website,
 	// extract contents from tuple
 	auto [title, url] = website;
 
-	if (request_success(status_code))
+	if (cmd::only_output_found)
 	{
-		std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
-		cmd::results += ("[hit]: " + url + '\n');
+		if (request_success(status_code))
+		{
+			std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
+			cmd::results += ("[hit]: " + url + '\n');
+		}
 	}
 	else
 	{
-		std::cout << "  [" << red << "nil" << white << "] " << url << '\n';
-		cmd::results += ("[nil]: " + url + '\n');
+		if (request_success(status_code))
+		{
+			std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
+			cmd::results += ("[hit]: " + url + '\n');
+		}
+		else
+		{
+			std::cout << "  [" << red << "nil" << white << "] " << url << '\n';
+			cmd::results += ("[nil]: " + url + '\n');
+		}
 	}
 }
 

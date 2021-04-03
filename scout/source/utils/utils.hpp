@@ -41,12 +41,10 @@ namespace cmd
 	}
 
 	inline std::shared_timed_mutex m{};
-
 	inline std::string results{};
-
 	inline std::string results_file_name{};
-
 	inline bool output_results_to_file{};
+	inline bool only_output_found{};
 }
 
 namespace utils

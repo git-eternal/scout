@@ -4,6 +4,7 @@
 
 #include <cpr/cpr.h>
 
+// can lead to false positives, will update in future probably
 #define request_success(status_code) \
   status_code >= 200 && status_code <= 299 
 

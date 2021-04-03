@@ -20,6 +20,11 @@ auto main(int argc, char* argv[]) -> int
     cmd::results_file_name = value;
   });
 
+  scout.add_argument("-f", "--found")
+    .default_value(false)
+    .implicit_value(true)
+    .help("only output found username hits");
+
   try // parse the cli arguments
   {
     scout.parse_args(argc, argv);
@@ -31,6 +36,9 @@ auto main(int argc, char* argv[]) -> int
     // prematurely exit the application
     std::exit(0);
   }
+
+  if (scout["-f"] == true || scout["--found"] == true)
+    cmd::only_output_found = true;
  
   cmd::initialize(); cmd::print_logo();
 
