@@ -8,7 +8,10 @@
 
 <hr>
 
-# How to build
+## Preview
+![preview](https://media.discordapp.net/attachments/826445675939627029/827524553357656074/unknown.png?width=357&height=544)
+
+## How to build
 #### Prerequisites
 * cpr (curl-for-people)
 * nlohmann-json
