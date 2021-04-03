@@ -10,7 +10,7 @@
 
 ## How to use
 ```console
-scout.exe --help
+$ scout.exe --help
 Usage: scout [options]
 
 Optional arguments:
