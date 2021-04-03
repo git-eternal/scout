@@ -6,7 +6,9 @@
   <a target="_blank" href="https://github.com/EternalRift/scout/releases" title="releases"><img src="https://img.shields.io/badge/Release-1.0-brightgreen.svg"></a>
 </p>
 
-### How to build
+<hr>
+
+# How to build
 #### Prerequisites
 * cpr (curl-for-people)
 * nlohmann-json
@@ -25,3 +27,5 @@ $ git clone https://github.com/EternalRift/scout.git
 ```
 
 * Open scout.sln with Visual Studio 2019 and compile with x86 Release
+
+<hr>
