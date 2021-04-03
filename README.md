@@ -26,7 +26,7 @@ Optional arguments:
 ## Preview
 ![preview](https://media.discordapp.net/attachments/826445675939627029/827524553357656074/unknown.png?width=357&height=544)
 
-## How to build
+## Compiling and contributing
 #### Prerequisites
 * cpr (curl-for-people)
 * nlohmann-json
@@ -38,7 +38,7 @@ vcpkg install cpr:x86-windows-static
 vcpkg install nlohmann-json:x86-windows-static
 ```
 
-#### Compiling and contributing
+#### Build
 ```console
 # clone the repo
 $ git clone https://github.com/EternalRift/scout.git
