@@ -134,4 +134,6 @@ auto web::begin_scouting(const std::string& username) -> void
 
 	if (cmd::output_results_to_file)
 		cmd::write_results_to_file();
+	else
+		std::cout << std::endl;
 }
