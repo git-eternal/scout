@@ -3,9 +3,6 @@
 #include "../global.hpp"
 #include "../web/web.hpp"
 
-												 // website title  website url
-using website_t = std::tuple<std::string, std::string>;
-
 const std::string logo = R"(                       _     _   ___  
    ___  ___ ___  _   _| |_  / | / _ \ 
   / __|/ __/ _ \| | | | __| | || | | |
@@ -25,14 +22,8 @@ namespace cmd
 	inline const char* clear = "\033c";
 	inline const char* red = "\x1B[31m";
 
-	auto output_request(
-		const website_t& website, 
-		const int status_code) -> void;
-
 	auto initialize() -> void;
-
 	auto set_console_cursor(bool shown) -> void;
-
 	auto write_results_to_file() -> void;
 
 	auto __forceinline print_logo() -> void
@@ -40,7 +31,6 @@ namespace cmd
 		std::cout << blue << logo << white << '\n';
 	}
 
-	inline std::shared_timed_mutex m{};
 	inline std::string results{};
 	inline std::string results_file_name{};
 	inline bool output_results_to_file{};

@@ -2,6 +2,49 @@
 
 using clock_tt = std::chrono::steady_clock;
 
+auto web::output_request(const website_t& website, const cpr::Response& r) -> void
+{
+	// lock the mutex so output doesn't screw up
+	std::unique_lock<decltype(m)> lock(m);
+
+	// extract contents from tuple
+	auto [name, url, error_type, message] = website;
+
+	if (error_type == "status_code")
+	{
+		if (request_success(r.status_code))
+		{
+			std::cout << "  [" << cmd::blue << "hit" << cmd::white << "] " << url << '\n';
+			cmd::results += ("[hit]: " + url + '\n');
+		}
+		else
+		{
+			if (!cmd::only_output_found)
+			{
+				std::cout << "  [" << cmd::red << "nil" << cmd::white << "] " << url << '\n';
+				cmd::results += ("[nil]: " + url + '\n');
+			}
+		}
+	}
+
+	if (error_type == "message")
+	{
+		if (r.text.find(message) == std::string::npos)
+		{
+			std::cout << "  [" << cmd::blue << "hit" << cmd::white << "] " << url << '\n';
+			cmd::results += ("[hit]: " + url + '\n');
+		}
+		else
+		{
+			if (!cmd::only_output_found)
+			{
+				std::cout << "  [" << cmd::red << "nil" << cmd::white << "] " << url << '\n';
+				cmd::results += ("[nil]: " + url + '\n');
+			}
+		}
+	}
+}
+
 auto web::begin_scouting(const std::string& username) -> void
 {
 	// store all the websites in tuple form
@@ -10,25 +53,38 @@ auto web::begin_scouting(const std::string& username) -> void
 	// grab the json of all the websites
 	cpr::Response r = cpr::Get
 	(
-		cpr::Url{ "https://pastebin.com/raw/1rwRvXKJ" },
+		cpr::Header{ {"Content-Type", "application/json"} },
+		cpr::Url{ "https://pastebin.com/raw/dciYgYJt" },
 		cpr::Timeout{ 2000 }
 	);
 
 	nlohmann::json sites_json{ json::parse(r.text) };
 
-	for (auto& website : sites_json["websites"].items())
+	for (const auto& website : sites_json.items())
 	{
-		std::string url = website.value()["url"];
+		// get the website name from key
+		std::string name{ website.key() };
 
-		// if url requires username elsewhere, replace
-		if (url.find("username") != std::string::npos)
-			utils::replace(url, "username", username);
+		std::string url{ website.value()["url"] };
+
+		// replace {} with the actual username
+		if (url.find("{}") != std::string::npos)
+			utils::replace(url, "{}", username);
 		else
-			url += username.c_str(); // append username
+			url += username.c_str(); // append 
 
+		std::string error_type{ website.value()["errorType"] };
+
+		// default message is nothing by default
+		// (since most sites return status codes)
+		std::string message{};
+
+		if (error_type == "message")
+			website.value()["errorMsg"].get_to(message);
+		
 		// instantiate a new tuple and push it back
 		sites_vector.push_back(
-			{ website.value()["title"], url }
+			{	name, url, error_type, message } 
 		);
 	}
 
@@ -48,12 +104,13 @@ auto web::begin_scouting(const std::string& username) -> void
 		sites_vector.end(), [&](auto& website) -> void
 	{
 		// parse title and url c++17 style
-		auto [title, url] = website;
+		auto [name, url, error_type, message] = website;
 
 		cpr::Response r = cpr::Get
 		(
+			cpr::Header{ {"Content-Type", "application/json"} },
 			cpr::Url{ url.c_str() },
-			cpr::Timeout{ 2000 },
+			cpr::Timeout{ 2500 },
 
 			// some sites may not respond if we do not provide a user agent due to them thinking we are a bot
 			cpr::UserAgent
@@ -65,7 +122,7 @@ auto web::begin_scouting(const std::string& username) -> void
 		);
 
 		// output the result to console
-		cmd::output_request(website, r.status_code);
+	  output_request(website, r);
 	});
 
 	// end the timer

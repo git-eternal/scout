@@ -1,37 +1,5 @@
 #include "utils.hpp"
 
-auto cmd::output_request(const website_t& website,
-	const int status_code) -> void
-{
-	// lock the mutex so output doesn't screw up
-	std::unique_lock<decltype(m)> lock(m);
-
-	// extract contents from tuple
-	auto [title, url] = website;
-
-	if (cmd::only_output_found)
-	{
-		if (request_success(status_code))
-		{
-			std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
-			cmd::results += ("[hit]: " + url + '\n');
-		}
-	}
-	else
-	{
-		if (request_success(status_code))
-		{
-			std::cout << "  [" << blue << "hit" << white << "] " << url << '\n';
-			cmd::results += ("[hit]: " + url + '\n');
-		}
-		else
-		{
-			std::cout << "  [" << red << "nil" << white << "] " << url << '\n';
-			cmd::results += ("[nil]: " + url + '\n');
-		}
-	}
-}
-
 auto cmd::set_console_cursor(bool shown = false) -> void
 {
 	// needed for colored cmd output
