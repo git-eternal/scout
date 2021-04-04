@@ -2,49 +2,6 @@
 
 using clock_tt = std::chrono::steady_clock;
 
-auto web::output_request(const website_t& website, const cpr::Response& r) -> void
-{
-	// lock the mutex so output doesn't screw up
-	std::unique_lock<decltype(m)> lock(m);
-
-	// extract contents from tuple
-	auto [name, url, error_type, message] = website;
-
-	if (error_type == "status_code")
-	{
-		if (request_success(r.status_code))
-		{
-			std::cout << "  [" << cmd::blue << "hit" << cmd::white << "] " << url << '\n';
-			cmd::results += ("[hit]: " + url + '\n');
-		}
-		else
-		{
-			if (!cmd::only_output_found)
-			{
-				std::cout << "  [" << cmd::red << "nil" << cmd::white << "] " << url << '\n';
-				cmd::results += ("[nil]: " + url + '\n');
-			}
-		}
-	}
-
-	if (error_type == "message")
-	{
-		if (r.text.find(message) == std::string::npos)
-		{
-			std::cout << "  [" << cmd::blue << "hit" << cmd::white << "] " << url << '\n';
-			cmd::results += ("[hit]: " + url + '\n');
-		}
-		else
-		{
-			if (!cmd::only_output_found)
-			{
-				std::cout << "  [" << cmd::red << "nil" << cmd::white << "] " << url << '\n';
-				cmd::results += ("[nil]: " + url + '\n');
-			}
-		}
-	}
-}
-
 auto web::begin_scouting(const std::string& username) -> void
 {
 	// store all the websites in tuple form
@@ -136,4 +93,47 @@ auto web::begin_scouting(const std::string& username) -> void
 		cmd::write_results_to_file();
 	else
 		std::cout << std::endl;
+}
+
+auto web::output_request(const website_t& website, const cpr::Response& r) -> void
+{
+	// lock the mutex so output doesn't screw up
+	std::unique_lock<decltype(m)> lock(m);
+
+	// extract contents from tuple
+	auto [name, url, error_type, message] = website;
+
+	if (error_type == "status_code")
+	{
+		if (request_success(r.status_code))
+		{
+			std::cout << "  [" << cmd::blue << "hit" << cmd::white << "] " << url << '\n';
+			cmd::results += ("[hit]: " + url + '\n');
+		}
+		else
+		{
+			if (!cmd::only_output_found)
+			{
+				std::cout << "  [" << cmd::red << "nil" << cmd::white << "] " << url << '\n';
+				cmd::results += ("[nil]: " + url + '\n');
+			}
+		}
+	}
+
+	if (error_type == "message")
+	{
+		if (r.text.find(message) == std::string::npos)
+		{
+			std::cout << "  [" << cmd::blue << "hit" << cmd::white << "] " << url << '\n';
+			cmd::results += ("[hit]: " + url + '\n');
+		}
+		else
+		{
+			if (!cmd::only_output_found)
+			{
+				std::cout << "  [" << cmd::red << "nil" << cmd::white << "] " << url << '\n';
+				cmd::results += ("[nil]: " + url + '\n');
+			}
+		}
+	}
 }
