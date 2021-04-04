@@ -8,6 +8,10 @@
 
 <hr>
 
+## Features
+* Works on 250+ websites
+* Fast, easy to use and compact
+
 ## How to use
 ```console
 $ scout.exe --help
