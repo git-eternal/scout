@@ -25,7 +25,7 @@ Optional arguments:
 -f --found      only output found username hits [default: false]
 ```
 
-**Example usage**: `scout.exe -f -u eternalrift --output results.txt`
+**Example usage**: `scout.exe -f -u eternalrift --output result.txt`
 
 ## Preview
 ![preview](https://media.discordapp.net/attachments/826445675939627029/827524553357656074/unknown.png?width=357&height=544)
